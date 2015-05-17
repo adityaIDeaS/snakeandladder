@@ -3,9 +3,9 @@ package model;
 public class Main {
 
 	public static void main(String[] args) {
-		int[][] snakes = {{11,5}};
-		int[][] ladders = {{2,6},{7,9}};
+		int[][] snakes = {{10,4},{15,9}};
+		int[][] ladders = {{2,5},{6,9}};
 		String[] name = {"player1","player2"};
-		new Game(name, 12, snakes, ladders).play();
+		new Game(name, 16, snakes, ladders).play();
 	}
 }
