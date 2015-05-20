@@ -1,4 +1,4 @@
-package snakeladder;
+package snakeandladder;
 
 public class Player {
 

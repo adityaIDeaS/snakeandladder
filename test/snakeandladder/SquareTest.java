@@ -4,11 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import snakeladder.Game;
-import snakeladder.ISquare;
-import snakeladder.Player;
-import snakeladder.Square;
-
 public class SquareTest {
 
 	public static final int[] LADDER = { 1, 4 };

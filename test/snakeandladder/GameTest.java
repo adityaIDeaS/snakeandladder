@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import snakeladder.Game;
-
 public class GameTest  {
 	
 	private Game game;

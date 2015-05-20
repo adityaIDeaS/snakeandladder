@@ -1,6 +1,5 @@
 package snakeandladder;
 
-import snakeladder.Game;
 import snakeladder.exception.InvalidInputException;
 
 public class Main {
