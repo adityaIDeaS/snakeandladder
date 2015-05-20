@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-import snakeladder.exception.InvalidInputException;
+import snakeandladder.exception.InvalidInputException;
 
 public class Game {
 

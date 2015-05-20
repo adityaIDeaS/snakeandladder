@@ -1,4 +1,4 @@
-package snakeladder.exception;
+package snakeandladder.exception;
 
 public class InvalidInputException extends Exception {
 

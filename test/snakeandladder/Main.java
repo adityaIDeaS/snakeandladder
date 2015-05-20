@@ -1,6 +1,6 @@
 package snakeandladder;
 
-import snakeladder.exception.InvalidInputException;
+import snakeandladder.exception.InvalidInputException;
 
 public class Main {
 	
