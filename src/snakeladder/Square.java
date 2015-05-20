@@ -1,4 +1,4 @@
-package model;
+package snakeladder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +8,24 @@ public class Square implements ISquare {
 	private int position;
 	private List<Player> players = new ArrayList<Player>();
 	private Game game;
+	private int shift = 0;
 
 	public Square(int position, Game game) {
 		this.position = position;
 		this.game = game;
 	}
 
+	public Square(ISquare square, int shift) {
+		this.position = square.getPosition();
+		this.game = square.getGame();
+		this.shift = shift;
+	}
+
 	@Override
 	public ISquare move(int position) {
 		int pos = getPosition() + position;
-		if(pos < game.getSquareSize()) {
-			return game.getSquare(pos).land() ;
+		if (pos < game.getSquareSize()) {
+			return game.getSquare(pos).land();
 		}
 		return this;
 	}
@@ -47,14 +54,12 @@ public class Square implements ISquare {
 		return game;
 	}
 
+	public ISquare land() {
+		return getGame().getSquare(getPosition() + shift);
+	}
+
 	@Override
 	public String toString() {
 		return "Square [position=" + position + "]";
 	}
-
-	@Override
-	public ISquare land() {
-		return this;
-	}
-
 }

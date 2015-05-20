@@ -1,4 +1,4 @@
-package model;
+package snakeladder;
 
 public class Player {
 

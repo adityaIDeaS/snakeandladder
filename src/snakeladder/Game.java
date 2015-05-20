@@ -1,4 +1,4 @@
-package model;
+package snakeladder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
+import snakeladder.exception.InvalidInputException;
+
 public class Game {
 
 	private List<ISquare> squares;
 	private Queue<Player> players;
-	private Player winner;
+	private Player winner = null;
 
-	public Game(String[] players, int squares, int[][] snakes, int[][] ladders) {
+	public Game(String[] players, int squares, int[][] snakes, int[][] ladders)
+			throws InvalidInputException {
 		createPlayers(players);
 		createSquares(squares);
 		addSnakes(snakes);
@@ -47,41 +50,55 @@ public class Game {
 			getFirstSquare().enter(player);
 			player.setSquare(getFirstSquare());
 		}
-		setWinner(null);
 	}
 
 	private int roll() {
 		return new Random().nextInt(6) + 1;
 	}
 
-	private void addSnakes(int[][] snakes) {
+	private void addSnakes(int[][] snakes) throws InvalidInputException {
 		addSpecialSquare(snakes, true);
 	}
 
-	private void addLadders(int[][] ladders) {
+	private void addLadders(int[][] ladders) throws InvalidInputException {
 		addSpecialSquare(ladders, false);
 	}
 
-	private void createPlayers(String[] names) {
+	private void createPlayers(String[] names) throws InvalidInputException {
+		if (names.length <= 0) {
+			throw new InvalidInputException(
+					"Need at least two players to play the game");
+		}
 		players = new LinkedList<Player>();
 		for (String name : names) {
 			players.add(new Player(name));
 		}
 	}
 
-	private void createSquares(int size) {
+	private void createSquares(int size) throws InvalidInputException {
+		if (size <= 0) {
+			throw new InvalidInputException(
+					"Board size should not be less than zero");
+		}
 		squares = new ArrayList<ISquare>();
 		for (int i = 0; i < size; i++) {
 			squares.add(new Square(i, this));
 		}
 	}
 
-	private void addSpecialSquare(int[][] values, boolean isSnake) {
+	private void addSpecialSquare(int[][] values, boolean isSnake)
+			throws InvalidInputException {
 		for (int i = 0; i < values.length; i++) {
 			int from = values[i][0] - 1;
 			int to = values[i][1] - 1;
-			squares.set(from, isSnake ? new SnakeSquare(from, from - to, this)
-					: new LadderSquare(from, to - from, this));
+			ISquare square = squares.get(from);
+			int shift = to - from;
+			if (isSnake && shift > 0) {
+				throw new InvalidInputException("Invalid snake input");
+			} else if (!isSnake && shift < 0) {
+				throw new InvalidInputException("Invalid ladder input");
+			}
+			squares.set(from, new Square(square, shift));
 		}
 	}
 
@@ -97,10 +114,6 @@ public class Game {
 		return winner;
 	}
 
-	public void setWinner(Player winner) {
-		this.winner = winner;
-	}
-
 	public ISquare getSquare(int position) {
 		return squares.get(position);
 	}
@@ -111,9 +124,7 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Game [ players=" + players
-				+ ", winner=" + winner + "]";
+		return "Game [ players=" + players + ", winner=" + winner + "]";
 	}
-	
-	
+
 }
